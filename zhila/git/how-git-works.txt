@@ -1,0 +1,1 @@
+Git is a way to create and work on files/folders in a more secure way. it allows you to effectively have a history of all the documents and changes you make in a more organized way. This is slightly confusing but fun. :) 
