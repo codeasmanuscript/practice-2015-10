@@ -1,0 +1,8 @@
+diff --git a/zhila/git/aboutme.txt b/zhila/git/aboutme.txt
+index e7a55a3..f86bd6c 100644
+--- a/zhila/git/aboutme.txt
++++ b/zhila/git/aboutme.txt
+@@ -1 +1,2 @@
+-I am Zhila. I am a MSc student in the department of nutritional sciences. I like photography, biking, cooking, anything creative. I hope to be an expert in R by the end of this. :)
++I am Zhila. I am a MSc student in the department of nutritional sciences. I like photography, biking, cooking, anything creative. I hope to be an expert in R by the end of this.
++I started my MSc in January. 

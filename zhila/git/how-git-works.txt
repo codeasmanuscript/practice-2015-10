@@ -1,0 +1,3 @@
+Git is a way to create and work on files/folders in a more secure way. it allows you to effectively have a history of all the documents and changes you make in a more organized way. This is slightly confusing but fun. :) 
+
+git and version control are important tools to make it easier to organize everything you have and allow you to effectively work with others on projects. it allows you to go back to older versions easily.
