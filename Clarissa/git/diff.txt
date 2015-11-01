@@ -1,0 +1,9 @@
+diff --git a/aboutme.txt b/aboutme.txt
+index 33603fa..5696c09 100644
+--- a/aboutme.txt
++++ b/aboutme.txt
+@@ -1,3 +1,3 @@
+ Clarissa Encisa
+-Tennis
++Tennis, Choir
+ Masters in Epidemiology

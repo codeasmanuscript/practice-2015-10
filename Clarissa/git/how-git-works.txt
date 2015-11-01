@@ -1,0 +1,4 @@
+- Git is a way of tracking the version of files and saves this history in a web-based
+ repository
+- Git version control is important because it can help me not to give my supervisor blank stares when he asks me what changes I made to my analysis.
+
