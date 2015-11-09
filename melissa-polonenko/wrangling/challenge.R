@@ -28,3 +28,23 @@ ds %>%
   tbl_df()
 
 # Challenge 3
+
+
+# Challenge 4
+
+ds %>%
+  select(-rowname) %>%
+  gather(Variable,Value) %>%
+  group_by(Variable) %>%
+  summarise(Min=min(Value),
+            Mean=mean(Value),
+            Max=max(Value))
+
+# Challenge 5
+ 
+ds %>%
+  filter(Education>=8,Infant.Mortality<18,(Fertility>=50 & Fertility<=60)) %>%
+  select(rowname)
+
+# Challenge 6
+
