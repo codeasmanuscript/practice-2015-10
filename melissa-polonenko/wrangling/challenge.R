@@ -48,3 +48,36 @@ ds %>%
 
 # Challenge 6
 
+ds %>%
+  mutate(Educated=as.factor(ifelse(Education>8,'yes','no'))) %>%
+  group_by(Educated) %>%
+  select(-rowname) %>%
+  do(cor(.[-7]) %>% broom::tidy()) %>%
+  gather(Var2,Correlation,-.rownames,-Educated) %>%
+  filter(Var2 != .rownames) %>%
+  knitr::kable()
+
+  
+
+# Challenge 7
+
+install.packages('broom')
+
+swiss %>%
+  gather(Indep, Xvalue, Fertility, Agriculture) %>%
+  gather(Dep, Yvalue, Education, Catholic) %>%
+  group_by(Dep, Indep) %>%
+  do(lm(Yvalue~Xvalue, data= .) %>% 
+       broom::tidy()) %>%
+  knitr::kable()
+
+#Add covariate
+swiss %>%
+  gather(Indep, Xvalue, Fertility, Agriculture) %>%
+  gather(Dep, Yvalue, Education, Catholic) %>%
+  group_by(Dep, Indep) %>%
+  do(lm(Yvalue~Xvalue+Infant.Mortality+Examination, data=.) %>% 
+       broom::tidy()) %>%
+  filter(term=='Xvalue') %>% #only show the adjusted slope of the main slope
+  select(Dep,Indep,estimate,std.error) %>%
+  knitr::kable()
