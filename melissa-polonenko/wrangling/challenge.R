@@ -51,13 +51,14 @@ ds %>%
 ds %>%
   mutate(Educated=as.factor(ifelse(Education>8,'yes','no'))) %>%
   group_by(Educated) %>%
-  select(-rowname) %>%
-  do(cor(.[-7]) %>% broom::tidy()) %>%
+  select(-rowname,-Education) %>%
+  do(cor(.[-6]) %>% broom::tidy()) %>%
   gather(Var2,Correlation,-.rownames,-Educated) %>%
   filter(Var2 != .rownames) %>%
+  select(Educated,Var1=.rownames,Var2,Correlation) %>%
   knitr::kable()
 
-  
+
 
 # Challenge 7
 
