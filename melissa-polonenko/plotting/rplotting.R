@@ -104,5 +104,20 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
 mpgsum <- summarySE(mpg, measurevar="displ", groupvars=c("class","drv"))
 
 ggplot(mpgsum, aes(x=drv, y=displ, color=class))+
-  geom_errorbar(aes(ymin=displ-se, ymax=displ+se))+
+  geom_errorbar(aes(ymin=displ-se, ymax=displ+se),width=.1)+
   geom_point()
+
+# source() 
+
+
+# Create a heat map
+library(reshape2)
+
+mtcars %>%
+  select(c(1,3:7)) %>%
+  cor() %>%
+  round(2) %>%
+  melt() %>%
+  ggplot(aes(x=Var1,y=Var2, fill=value))+
+  geom_tile()+ # gives a heat map of correlation
+  scale_fill_gradient2(low="blue",high="red", mid="white", limit=c(-1,1))
