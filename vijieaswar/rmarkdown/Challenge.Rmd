@@ -1,0 +1,75 @@
+---
+title: "Challenge"
+author: "Viji"
+date: "November 23, 2015"
+output: 
+  html_document:
+    fig_caption: true
+    number_section: true
+    toc: true
+---
+
+
+
+```{r, echo = FALSE}
+library(dplyr)
+library(tidyr)
+library(pander)
+library(captioner)
+library(ggplot2)
+library(rmarkdown)
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+setwd("~/Desktop/practice-2015-10/vijieaswar/rmarkdown")
+```
+
+```{r}
+ds <- as.data.frame(state.x77) %>% 
+  add_rownames() %>% 
+  tbl_df()
+
+str(state.x77)
+
+names(ds)
+
+
+```
+
+# Brief Description
+The dataset consists of demographic information from `r dim(ds)[1]` states for the following `r dim(ds[-1])[2]` variables: `r names(ds[-1])`. The mean population across all states is `r round( mean(ds$Population),2)` and the standard deviation is `r round(sd(ds$Population),2)`
+
+```{r}
+
+figNums <- captioner(prefix = 'Figure')
+state_cap <- figNums('stateLitIncome', 'Income varies across illiteracy')
+
+```
+
+# Plots
+```{r, echo=FALSE, fig.cap=state_cap, dpi=150}
+ ds %>% 
+ ggplot(aes(x=Illiteracy, y=Income))+
+  geom_point()+
+  labs(plot.title="Income across illteracy", x="Illiteracy", y="Income")
+
+
+```
+
+#Tables
+```{r}
+
+tabNums <- captioner(prefix = 'Table')
+
+ds %>% 
+  gather(Variable, Value, -rowname) %>% 
+  group_by(Variable) %>% 
+  summarise(Means = mean(Value) %>% round(2),
+            SD = sd(Value) %>% round(2)) %>% 
+  pander(caption = tabNums('Demodata', 'Demographic data of 50 states'))
+```
+
+```{r, eval=FALSE}
+render('Challenge.Rmd', c('word_document', 'html_document'))
+```
+
+

@@ -102,7 +102,6 @@ library(reshape2)
 
 #cor returns a matric, not a df
 #creating a heatmap
-
 mtcars %>% 
   select(c(1,3,4,5,6,7)) %>% 
   cor() %>% 

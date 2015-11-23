@@ -1,0 +1,134 @@
+---
+title: "Practice"
+author: "Viji"
+date: "November 23, 2015"
+output: 
+  html_document:
+      fig_caption: true
+      toc: true
+---
+```{r}
+#in the YAML, add the following
+#bibliography: give the location of the bib file
+#for a particular style
+#csl: give the location of the bib file citation style language. can be found in github
+
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+# Intro
+
+## Citing a study
+```{r}
+
+
+
+#how to enter here from papers. need to export the bib key
+#@some bibkey
+#[] will make the round bracketts around the citation. 
+```
+
+```{r}
+
+
+#* makes the text in italics
+#** on either side will bold words
+#``` is a code block
+
+#` having things in line
+# > indicates that it is goin to be quote 
+# @ with bib key will extract refs
+
+#YAML header is for R to know what to do. YAML has o be closed in ---
+
+#pander, kable creates tables
+#ggplot qplot creates figure
+
+#conrol+shift+K will knit html
+```
+
+```{r, echo=FALSE}
+library(pander)
+library(captioner)
+
+#install.packages('captioner', type = 'source') if you get an error message while installing
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+#Can use this above ling to apply to every chunk
+
+#table option 1
+knitr::kable(summary(cars))
+
+
+#table option 2 
+tabNums <- captioner(prefix = 'Table')
+figNums <- captioner(prefix = 'Figure')
+cars_cap <- figNums('carsFig', 'This is a caption for the figure')
+
+
+pander(lm(cars), caption = tabNums('tab1', 'This is the caption for table 1')) #first coloumn as Y, and second column as X. if you have many columns, 2nd 3rd columnds are X2, X3 etc.
+
+
+```
+
+REference to **`r tabNums('tab1', display = 'cite')`**.
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE, fig.cap=cars_cap}
+#have to write fig.caps = cars_cap because knitr is finicky
+
+plot(cars)
+```
+
+```{r}
+#Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+#`r will take the following stuff within ` as a command. if you dont write r after ` it will take it as text
+#compare `r mean(cars$dist)` with `mean(cars$dist)`
+```
+
+#Tables
+```{r}
+library(dplyr)
+library(tidyr)
+
+cars %>% 
+  gather(Measure, Value) %>% 
+  group_by(Measure) %>% 
+  summarise(means =mean(Value) %>%  round(2)) %>% 
+  pander()
+  
+```  
+
+# Figures
+## Scatterplot
+
+```{r, message = FALSE, fig.height=10, fig.width=5, dpi=150, dev='png'}
+library(ggplot2)
+qplot(dist,speed, data = cars, geom= 'point')
+
+```
+
+This is a list
+
+- There is `r length(cars)` rows in `cars`
+- There are `r dim(cars)[2]` variables in `cars`
+
+you would add ` ` around the cars to differentiate it from regular text
+
+This is a quote:
+
+> to be or not to be 
+
+```{r}
+#command+option+i is a new R chunk
+#command+alt+c runs the R chunk
+
+
+```
+
+# References

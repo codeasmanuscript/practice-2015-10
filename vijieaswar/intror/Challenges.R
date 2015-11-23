@@ -75,3 +75,8 @@ lapply(df, range, na.rm=T)
 sapply(df, range, na.rm=T)
 #the sapply displays the range min and max value in 2 rows
 
+mapply()
+?mapply (not in class)
+
+Question8 <- tapply(df$hp, df$gear, max, na.rm=T)
+Question8
