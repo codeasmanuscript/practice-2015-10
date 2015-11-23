@@ -1,0 +1,71 @@
+---
+title: "RMarkdown Challenge"
+author: "Melissa Polonenko"
+date: "Monday, November 23, 2015"
+output: 
+  html_document:
+    toc: true
+    fig_caption: true
+    number_section: true
+  word_document:
+    toc: true
+    fig_caption: true
+    
+---
+
+```{r,echo=FALSE, warning=FALSE, message=FALSE}
+# Prepare
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE)
+setwd("C:/Users/Melissa/Desktop/practice-2015-10/melissa-polonenko/rmarkdown")
+
+
+library(pander)
+library(captioner)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+df<- as.data.frame(state.x77)%>%
+  add_rownames() %>%
+  tbl_df()
+
+# Table and figure numbers/captions
+tabNums <- captioner(prefix='Table')
+figNums <- captioner(prefix='Figure')
+income_illit_cap <- figNums('in_il_Fig','Illiteracy by Income for each of the US states')
+
+```
+
+# Brief Description
+
+In the `state.x77` dataset there are:
+
+- `r dim(df)[1]` rows, each row specifying a US state
+- `r dim(df[-1])[2]` variables, which include: `r names(df[-1])`
+
+The population across these `r dim(df)[1]` states averages `r mean(df$Population) %>% round(0)` +/- `r sd(df$Population) %>% round(0)` (SD). 
+
+# Plots
+
+```{r,fig.cap=income_illit_cap, dpi=300}
+df %>%
+  ggplot(aes(x=Income, y=Illiteracy))+
+  geom_point(size=2)+
+  theme_bw()+
+  labs(x="Income", y="Illiteracy")
+```
+
+# Tables
+```{r,results='asis'}
+df %>%
+  select(-rowname) %>%
+  gather(Measure,Value) %>%
+  group_by(Measure) %>%
+  summarise(Means=mean(Value) %>% round(1), 
+            SD=sd(Value) %>% round(1)) %>%
+  pander(caption=tabNums('tab1','Summary of Statistics for the USA'))
+```
+
+```{r, eval=FALSE}
+rmarkdown::render('challenge.Rmd', c('word_document', 'html_document'))
+```

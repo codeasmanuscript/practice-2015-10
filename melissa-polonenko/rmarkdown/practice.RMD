@@ -1,0 +1,96 @@
+---
+title: "RMarkdown Practice"
+author: "Melissa Polonenko"
+date: "Monday, November 23, 2015"
+output: 
+  html_document:
+    fig_caption: true
+    toc: true
+---
+
+# Intro
+
+## Citing a study
+```{r,echo=FALSE}
+# title: "RMarkdown Practice"
+# author: "Melissa Polonenko"
+# date: "Monday, November 23, 2015"
+# bibliography: /home/melissa/bibliography/bib.bib
+# csl: location of the csl file (style for references; can get in citation-style-language on github - get a clone or copy)
+# output: 
+#   html_document:
+#     fig_caption: true
+#     toc: true
+
+# @Giacca2011a versus [@Giacco2011a;@Matthews1985]
+
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+# load libraries
+library(pander)
+library(captioner)
+
+# set options for whole document
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE)
+
+# create nicely formatted table
+knitr::kable(summary(cars))
+# pander(lm(cars)) # first column as y and the rest as x's
+
+tabNums <- captioner(prefix='Table')
+figNums <- captioner(prefix='Figure')
+cars_cap <- figNums('carsFig','This is a caption for the figure')
+
+# labelling a table
+pander(lm(cars), caption=tabNums('tab1','This is the caption for table1'))
+```
+
+
+Reference to `r tabNums('tab1',display='cite')`. The text within "`" that starts with "r" will run that code and replace it here. Otherwise, without the "r" you will just print the code.
+
+Compare `r mean(cars$dist)` with `mean(car$dist)`.
+
+# Tables
+```{r,message=FALSE}
+library(dplyr)
+library(tidyr)
+
+
+cars %>%
+  gather(Measure,Value) %>%
+  group_by(Measure) %>%
+  summarise(Means=mean(Value) %>% round(2)) %>%
+  pander()
+```
+
+# Figures
+## Scatterplot
+
+```{r,message=FALSE,fig.height=10, fig.width=5, dpi=150, dev='png'}
+library(ggplot2)
+qplot(dist,speed,data=cars, geom='point')
+```
+
+For a list: (need a space after to generate the list)
+
+- There is `r length(cars)` rows in `cars`
+- There are `r dim(cars)[2]` variables in `cars`
+
+This is a quote:
+
+> To be or not to be
+
+```{r}
+
+```
+
+
+You can also embed plots, for example:
+```{r, echo=FALSE, fig.cap=cars_cap}
+
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
